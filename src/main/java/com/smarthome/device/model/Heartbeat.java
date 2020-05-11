@@ -8,5 +8,9 @@ import java.util.UUID;
 public class Heartbeat {
 
     UUID deviceUuid;
+    String protocol;
+    String ipAddress;
+    Integer port;
+    String version;
 
 }

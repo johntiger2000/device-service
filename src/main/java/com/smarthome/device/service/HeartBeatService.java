@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -26,11 +28,14 @@ public class HeartBeatService {
 
     @Scheduled(fixedRate=5000)
     public void heartBeat() throws IOException {
-        String data = new String(Files.readAllBytes(Paths.get("/data/device")));
-        UUID deviceUuid = UUID.fromString(data);
+        UUID deviceUuid = UUID.fromString(getDeviceUuidStr());
         Heartbeat heartbeat = new Heartbeat();
         heartbeat.setDeviceUuid(deviceUuid);
         restTemplate.put(url, heartbeat);
+    }
+
+    protected String getDeviceUuidStr() throws IOException {
+        return new String(Files.readAllBytes(Paths.get("/data/device"))).trim();
     }
 
 }
