@@ -1,0 +1,7 @@
+[
+  {
+    "port": 5000,
+    "name": "Synology",
+    "protocol": "http"
+  }
+]
